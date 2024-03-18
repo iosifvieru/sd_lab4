@@ -2,42 +2,43 @@ package com.sd.laborator.controllers
 
 import com.sd.laborator.interfaces.AccountInterface
 import com.sd.laborator.interfaces.EncryptionInterface
+import com.sd.laborator.pojo.LoginRequest
 import com.sd.laborator.pojo.User
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class AccountController {
+class AuthenticationController {
     @Autowired
     private lateinit var accountService: AccountInterface
 
     @Autowired
     private lateinit var passwordHash: EncryptionInterface
-    // CREATE
-    @RequestMapping(value=["/createaccount"], method=[RequestMethod.POST])
-    fun createAccount(@RequestBody user: User): ResponseEntity<Unit> {
-        user.password = passwordHash.encrypt(user.password)
-        accountService.addAccount(user)
 
-        return ResponseEntity(Unit, HttpStatus.CREATED)
-    }
+    @RequestMapping(value=["/login"], method=[RequestMethod.POST])
+    fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<Unit> {
 
-    // DELETE
-    @RequestMapping(value=["/deleteaccount/{id}"], method=[RequestMethod.DELETE])
-    fun deleteAccount(@PathVariable id: Int): ResponseEntity<Unit>{
-        accountService.deleteAccount(id)
+        println(loginRequest.username)
+        println(loginRequest.password)
+
+        val user: User = accountService.getAccount(loginRequest.username)
+
+        if(passwordHash.encrypt(loginRequest.password) != user.password){
+            return ResponseEntity(Unit, HttpStatus.NOT_FOUND)
+        }
+
+        /*
+        if(loginRequest.password != user.password){
+            return ResponseEntity(Unit, HttpStatus.NOT_FOUND)
+        }*/
+
         return ResponseEntity(Unit, HttpStatus.OK)
     }
 
-    // READ
-    // TODO
 
-    // UPDATE
-    // TODO
 }

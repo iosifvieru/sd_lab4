@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, jsonify, render_template, request
 import requests
 import json
 
@@ -8,6 +8,40 @@ app = Flask(__name__)
 @app.route('/')
 def main():
     return render_template("index.html")
+
+@app.route('/login', methods=['GET'])
+def login_page():
+    return render_template("login.html")
+
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form["username"]
+    password = request.form["password"]
+
+    data = {
+        'username': username,
+        'password': password
+    }
+
+    url = 'https://localhost:8080/login'
+    
+    response = requests.post(url, json=data, verify=False)
+
+    if(response.status_code == 200):
+        return "succes"
+    else:
+        return "fail"
+
+
+@app.route('/encrypt')
+def encrypt():
+    url = 'https://localhost:8080/test'
+
+    response = requests.post(url, json="test", verify=False)
+    print(response.json())
+    return render_template("index.html")
+#    return json.dumps(response.json())
+
 
 @app.route('/addCheltuiala')
 def addCheltuiala():
@@ -55,7 +89,7 @@ def createAccount():
         'password': password
     }
 
-    url = 'https://localhost:8080/register'
+    url = 'https://localhost:8080/createaccount'
 
     requests.post(url, json=user, verify=False)
         
