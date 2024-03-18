@@ -13,11 +13,10 @@ class CheltuieliController {
     @Autowired
     private lateinit var cheltuialaService: ICheltuieli
 
-    @RequestMapping(value = ["/addcheltuiala"], method = [RequestMethod.GET])
-    fun createCheltuiala(): ResponseEntity<Unit> {
-        val cheltuiala2 = Cheltuiala(1, 2, 222.2f, "dasdasd")
-        cheltuialaService.add(cheltuiala2)
-
+    @RequestMapping(value = ["/addcheltuiala"], method=[RequestMethod.POST])
+    fun createCheltuiala(@RequestBody cheltuiala: Cheltuiala): ResponseEntity<Unit> {
+        println(cheltuiala)
+        cheltuialaService.add(cheltuiala)
         return ResponseEntity(Unit, HttpStatus.CREATED)
     }
 

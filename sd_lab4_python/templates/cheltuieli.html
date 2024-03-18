@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Cheltuieli</title>
+        	<meta charset="UTF-8" />
+	</head>
+	<body>
+		<table>
+			<thead>	
+				<tr>
+					<td>ID</td>
+					<td>USERID</td>
+					<td>SUMA</td>
+					<td>DESCRIERE</td>
+				</tr>
+			</thead>
+			<tbody>
+			{% for cheltuiala in cheltuieli %}
+			<tr>
+				<td>{{cheltuiala.id}}</td>
+				<td>{{cheltuiala.userID}}</td>
+				<td>{{cheltuiala.suma}}</td>
+				<td>{{cheltuiala.descriere}}</td>
+			</tr>
+			{% endfor %}
+			</tbody>		
+		
+		</table>
+	</body>
+	
+</html>
+				
