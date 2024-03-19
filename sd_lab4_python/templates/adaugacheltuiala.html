@@ -1,0 +1,28 @@
+<html>
+
+<head>
+    <title>Adauga cheltuiala</title>
+</head>
+
+<body>
+	<nav>
+		<a href="/">Home</a>
+		<a href="/logout">Logout</a>
+	</nav>
+	<br>
+
+	{% if error_message%}
+	<p>{{error_message}}</p>
+	{% endif %}
+	<form action="/add" method="POST">
+		<label for="suma">Suma: </label>
+		<input type="number" step="any" name ="suma" placeholder="Suma" required/>
+		<br>
+		<label for="descriere">Descriere: </label>
+		<input type="text" name="descriere" placeholder="Descriere" required/>
+		<br>
+		<input type="submit" value="Adauga"/>
+    </form>
+
+</body>
+</html>

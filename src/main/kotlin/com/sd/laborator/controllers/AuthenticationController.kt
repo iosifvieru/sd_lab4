@@ -22,20 +22,24 @@ class AuthenticationController {
     private lateinit var passwordHash: EncryptionInterface
 
     @RequestMapping(value=["/login"], method=[RequestMethod.POST])
-    fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<Unit> {
+    fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<Any> {
         val user: User = accountService.getAccount(loginRequest.username)
+        /*if(passwordHash.encrypt(loginRequest.password) != user.password){
+            return ResponseEntity(Unit, HttpStatus.NOT_FOUND)
+        }*/
 
-        if(passwordHash.encrypt(loginRequest.password) != user.password){
+        // parola vine deja hashuita (username+password -> SHA-256)
+        if(loginRequest.password != user.password){
             return ResponseEntity(Unit, HttpStatus.NOT_FOUND)
         }
-        return ResponseEntity(Unit, HttpStatus.OK)
+        user.password=""
+        return ResponseEntity(user, HttpStatus.OK)
     }
 
     @RequestMapping(value=["/register"], method=[RequestMethod.POST])
     fun createAccount(@RequestBody user: User): ResponseEntity<Unit> {
-        user.password = passwordHash.encrypt(user.password)
-        accountService.addAccount(user)
 
+        accountService.addAccount(user)
         return ResponseEntity(Unit, HttpStatus.CREATED)
     }
 

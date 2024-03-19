@@ -1,25 +1,28 @@
 <!DOCTYPE html>
-
 <html>
 <head>
 	<title>Register</title>
 	<meta charset="UTF-8">
 </head>
 <body>
-	<form method="POST" action="/createAccount">
+	{% if error_message%}
+	<p>{{error_message}}</p>
+	{% endif %}
+	<form method="POST" action="/register">
 		<label for="firstName">First name: </label>
-		<input type="text" name="firstName" /><br>
+		<input type="text" name="firstName" required/><br>
 		
 		<label for="lastName">Last name: </label>
-		<input type="text" name="lastName" /><br>
+		<input type="text" name="lastName" required/><br>
 		
 		<label for="username">Username: </label>
-		<input type="text" name="username" /><br>
+		<input type="text" name="username" required/><br>
 		
 		<label for="password">Password: </label>
-		<input type="password" name="password" /><br>
+		<input type="password" name="password" required/><br>
 
 		<input type="submit" value="Register" />
 	</form>
+	<a href="/login">Login.</a>
 </body>
 </html>

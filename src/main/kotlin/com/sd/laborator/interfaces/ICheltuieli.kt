@@ -8,4 +8,6 @@ interface ICheltuieli {
     fun add(cheltuiala: Cheltuiala)
     fun delete(id: Int)
     fun update(id:Int, cheltuiala: Cheltuiala)
+
+    fun getCheltuiala(id: Int): Cheltuiala
 }

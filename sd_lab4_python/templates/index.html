@@ -4,18 +4,46 @@
 		<title>Home</title>
 		<meta charset="UTF-8">
 	</head>
-
 	<body>
-		<h1>Hello world! </h1>
-		<form method="GET" action="/addCheltuiala">
-			<label for="suma">Suma:</label>
-			<input type="number" step="any" name="suma" value="0.0"/>
-			
-			<label for="descriere">Descriere: </label>
-			<input type="text" name="descriere"/>
-
-			<input type="submit"/>
-		</form>
+		<h1>Cheltuieli </h1>
+		<nav>
+			<a href="/add">Adauga cheltuiala</a>
+			<a href="/logout">Logout</a>
+		</nav>
+		<br>
+		<table border="1">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>USER ID</th>
+					<th>SUMA</th>
+					<th>DESCRIERE</th>
+					<th>DELETE</th>
+					<th>UPDATE</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for cheltuiala in listaCheltuieli %}
+				<tr>
+					<td>{{ cheltuiala.id }}</td>
+					<td>{{ cheltuiala.userID }}</td>
+					<td>{{ cheltuiala.suma }}</td>
+					<td>{{ cheltuiala.descriere }}</td>
+					<td>
+						<form method="POST" action="/delete/{{cheltuiala.id}}">
+							<button type="submit">Delete</button>
+						</form>
+					</td>
+					<td>
+						<form method="GET" action="/update/{{cheltuiala.id}}">
+							<button type="submit">Update</button>
+						</form>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<p> Total cheltuieli: {{ total }} </p>
 	</body>
 </html>
 

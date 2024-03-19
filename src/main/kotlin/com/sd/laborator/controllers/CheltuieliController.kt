@@ -20,6 +20,12 @@ class CheltuieliController {
         return ResponseEntity(Unit, HttpStatus.CREATED)
     }
 
+    @RequestMapping(value = ["/getcheltuiala/{id}"], method = [RequestMethod.GET])
+    fun preiaCheltuiala(@PathVariable id: Int): ResponseEntity<Any>{
+        val cheltuiala = cheltuialaService.getCheltuiala(id)
+        return ResponseEntity(cheltuiala, HttpStatus.FOUND)
+    }
+
     @RequestMapping(value = ["/cheltuieli"], method = [RequestMethod.GET])
     fun getCheltuieli() :  ResponseEntity<List<Cheltuiala>> {
         val cheltuieli = cheltuialaService.afisare()
@@ -34,6 +40,12 @@ class CheltuieliController {
     @RequestMapping(value = ["/deletecheltuiala/{id}"], method = [RequestMethod.DELETE])
     fun deleteCheltuieli(@PathVariable id: Int): ResponseEntity<Unit> {
         cheltuialaService.delete(id)
+        return ResponseEntity(Unit, HttpStatus.OK)
+    }
+
+    @RequestMapping(value = ["/updatecheltuiala/{id}"], method=[RequestMethod.PUT])
+    fun updateCheltuiala(@PathVariable id:Int, @RequestBody cheltuiala: Cheltuiala): ResponseEntity<Unit> {
+        cheltuialaService.update(id, cheltuiala)
         return ResponseEntity(Unit, HttpStatus.OK)
     }
 }

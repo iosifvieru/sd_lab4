@@ -26,13 +26,14 @@ class AccountService: AccountInterface{
     }
 
     override fun updateAccount(id: Int, user: User) {
-        val query = "UPDATE users SET firstname = ${user.firstName}, lastname = ${user.lastName}, username= ${user.username}, password = ${user.password};"
+        val query = "UPDATE users SET firstname = '${user.firstName}', lastname = '${user.lastName}', username= '${user.username}', password = '${user.password}' WHERE id='$id';"
         storage.executeQuery(query)
     }
 
     override fun getAccount(username: String): User {
         val query = "SELECT * FROM users WHERE username='$username';"
         val results = storage.executeQuery(query)
+
         val user: User = User(-1, "", "", "")
 
         if(results == null){

@@ -2,36 +2,38 @@ package com.sd.laborator.services
 
 import com.sd.laborator.interfaces.DatabaseInterface
 import org.springframework.stereotype.Service
-import java.sql.Connection
-import java.sql.DriverManager
-import java.sql.PreparedStatement
-import java.sql.ResultSet
+import java.sql.*
 
 @Service
 class DatabaseService : DatabaseInterface{
     private val path = "jdbc:sqlite:sdlab4.db"
-    private lateinit var connection: Connection
 
-    override fun getConnection(): Connection {
+    private var connection: Connection? = null
+    override fun getConnection(): Connection? {
         this.connection = DriverManager.getConnection(path)
-        return connection
+        return this.connection
     }
 
     override fun executeQuery(query: String): ResultSet? {
-        val connection = DriverManager.getConnection(path)
-        val statement = connection.createStatement()
-
-        if(query.contains("SELECT")){
-            return statement.executeQuery(query)
+        if(this.connection == null){
+            getConnection()
         }
 
-        statement.executeUpdate(query)
-        connection.close()
+        val statement = connection?.createStatement()
+        var result: ResultSet? = null
 
-        return null
+        if(query.contains("SELECT")){
+            result = statement?.executeQuery(query)
+        }
+        else {
+            statement?.executeUpdate(query)
+        }
+        return result
     }
 
     override fun closeConnection() {
-       this.connection.close()
+       if(this.connection != null){
+           connection?.close()
+       }
     }
 }

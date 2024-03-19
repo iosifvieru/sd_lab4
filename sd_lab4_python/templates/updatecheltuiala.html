@@ -1,0 +1,34 @@
+<html>
+<head>
+    <title>Update cheltuiala</title>
+</head>
+
+<body>
+	<nav>
+		<a href="/">Home</a>
+		<a href="/logout">Logout</a>
+	</nav>
+	<br>
+
+	{% if error_message%}
+	<p>{{error_message}}</p>
+	{% endif %}
+
+	<form action="/updateCh" method="POST">
+
+        <input type="number" name="id" value="{{date.id}}" hidden>
+
+		<label for="suma">Suma: </label>
+		<input type="number" step="any" name ="suma" placeholder="Suma" value="{{date.suma}}"required/>
+		
+        <br>
+		
+        <label for="descriere">Descriere: </label>
+		<input type="text" name="descriere" placeholder="Descriere" value="{{date.descriere}}" required/>
+		
+        <br>
+		<input type="submit" value="Modifica"/>
+    </form>
+
+</body>
+</html>
