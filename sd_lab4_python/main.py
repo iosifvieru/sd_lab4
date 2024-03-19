@@ -89,7 +89,7 @@ def createAccount():
         'password': password
     }
 
-    url = 'https://localhost:8080/createaccount'
+    url = 'https://localhost:8080/register'
 
     requests.post(url, json=user, verify=False)
         

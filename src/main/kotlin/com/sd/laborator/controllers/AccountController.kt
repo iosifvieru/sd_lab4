@@ -17,16 +17,7 @@ class AccountController {
     @Autowired
     private lateinit var accountService: AccountInterface
 
-    @Autowired
-    private lateinit var passwordHash: EncryptionInterface
     // CREATE
-    @RequestMapping(value=["/createaccount"], method=[RequestMethod.POST])
-    fun createAccount(@RequestBody user: User): ResponseEntity<Unit> {
-        user.password = passwordHash.encrypt(user.password)
-        accountService.addAccount(user)
-
-        return ResponseEntity(Unit, HttpStatus.CREATED)
-    }
 
     // DELETE
     @RequestMapping(value=["/deleteaccount/{id}"], method=[RequestMethod.DELETE])

@@ -26,6 +26,8 @@ class DatabaseService : DatabaseInterface{
         }
 
         statement.executeUpdate(query)
+        connection.close()
+
         return null
     }
 

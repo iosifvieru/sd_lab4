@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class AuthenticationController {
+
     @Autowired
     private lateinit var accountService: AccountInterface
 
@@ -22,23 +23,20 @@ class AuthenticationController {
 
     @RequestMapping(value=["/login"], method=[RequestMethod.POST])
     fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<Unit> {
-
-        println(loginRequest.username)
-        println(loginRequest.password)
-
         val user: User = accountService.getAccount(loginRequest.username)
 
         if(passwordHash.encrypt(loginRequest.password) != user.password){
             return ResponseEntity(Unit, HttpStatus.NOT_FOUND)
         }
-
-        /*
-        if(loginRequest.password != user.password){
-            return ResponseEntity(Unit, HttpStatus.NOT_FOUND)
-        }*/
-
         return ResponseEntity(Unit, HttpStatus.OK)
     }
 
+    @RequestMapping(value=["/register"], method=[RequestMethod.POST])
+    fun createAccount(@RequestBody user: User): ResponseEntity<Unit> {
+        user.password = passwordHash.encrypt(user.password)
+        accountService.addAccount(user)
+
+        return ResponseEntity(Unit, HttpStatus.CREATED)
+    }
 
 }
