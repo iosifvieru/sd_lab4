@@ -18,8 +18,8 @@ class AuthenticationController {
     @Autowired
     private lateinit var accountService: AccountInterface
 
-    @Autowired
-    private lateinit var passwordHash: EncryptionInterface
+    //@Autowired
+    //private lateinit var passwordHash: EncryptionInterface
 
     @RequestMapping(value=["/login"], method=[RequestMethod.POST])
     fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<Any> {
